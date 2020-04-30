@@ -15,5 +15,6 @@ function sum(range) {
   return(total);
 }
 
+//Output Create
 console.log(range(1, 10));
 console.log(sum(range(1, 10)));
