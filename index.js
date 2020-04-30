@@ -25,7 +25,7 @@ var SCRIPTS = [
   }
 ];
 
-// Filtering Arrays
+//FILTERING Arrays
 function z_filter(array, test) {
   let passed = [];
   for (let element of array) {
@@ -40,7 +40,23 @@ function z_filter(array, test) {
 console.log(z_filter(SCRIPTS, script => script.living));
 console.log(SCRIPTS.filter(s => s.direction == "ltr"));
 
-//Summarize with reduce
+//TRANSFORMING with map
+function z_map(array, transform) {
+  let mapped = [];
+  for (let element of array) {
+    mapped.push(transform(element));
+  }
+  return(mapped);
+}
+
+//Output custom function and standard function
+let ltrScripts = SCRIPTS.filter(s => s.direction == "ltr");
+console.log(z_map(ltrScripts, s => s.name));
+console.log(ltrScripts.map(s => s.name));
+//FILTER AND MAP using COMPOSABILITY
+console.log(SCRIPTS.filter(s => s.direction == "rtl").map(s => s.name));
+
+//SUMMARIZE with reduce
 function z_reduce(array, combine, start) {
   let current = start;
   for (let element of array) {
@@ -51,4 +67,12 @@ function z_reduce(array, combine, start) {
 
 //Output custom function and standard function
 console.log(z_reduce([1,2,3,4,5], (a, b) => a + b, 0));
-console.log([1, 2, 3, 4].reduce((a, b) => a + b)); 
+console.log([1, 2, 3, 4].reduce((a, b) => a + b));
+
+//COMPOSABILITY
+function average(array) {
+  return array.reduce((a, b) => a + b) / array.length;
+}
+
+console.log(Math.round(average(SCRIPTS.filter(s => s.living).map(s => s.year))));
+console.log(Math.round(average(SCRIPTS.filter(s => !s.living).map(s => s.year))));
