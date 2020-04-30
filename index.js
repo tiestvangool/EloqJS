@@ -37,8 +37,8 @@ function z_filter(array, test) {
 }
 
 //Output custom function and standard function
-console.log(z_filter(SCRIPTS, script => script.living));
-console.log(SCRIPTS.filter(s => s.direction == "ltr"));
+//console.log(z_filter(SCRIPTS, script => !script.living));
+console.log(SCRIPTS.filter(s => s.living));
 
 //TRANSFORMING with map
 function z_map(array, transform) {
