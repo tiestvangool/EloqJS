@@ -7,5 +7,13 @@ function range(start, end) {
   return(array);
 }
 
+function sum(range) {
+  let total = 0;
+  for (value of range) {
+    total += value;
+  }
+  return(total);
+}
 
 console.log(range(1, 10));
+console.log(sum(range(1, 10)));
