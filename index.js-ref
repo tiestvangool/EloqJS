@@ -25,6 +25,11 @@ var SCRIPTS = [
   }
 ];
 
+//TREE TEST
+for(i = "#"; i <= 7; i += "#") {
+  console.log(i);
+}
+
 //FILTERING Arrays
 function z_filter(array, test) {
   let passed = [];
