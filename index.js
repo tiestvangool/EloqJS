@@ -1,80 +1,63 @@
-var SCRIPTS = [
-  {
-    name: "Adlam",
-    ranges: [[125184, 125259], [125264, 125274], [125278, 125280]],
-    direction: "rtl",
-    year: 1987,
-    living: true,
-    link: "https://en.wikipedia.org/wiki/Fula_alphabets#Adlam_alphabet"
-  },
-  {
-    name: "Caucasian Albanian",
-    ranges: [[66864, 66916], [66927, 66928]],
-    direction: "ltr",
-    year: 420,
-    living: false,
-    link: "https://en.wikipedia.org/wiki/Caucasian_Albanian_alphabet"
-  },
-  {
-    name: "Ahom",
-    ranges: [[71424, 71450], [71453, 71468], [71472, 71488]],
-    direction: "ltr",
-    year: 1250,
-    living: false,
-    link: "https://en.wikipedia.org/wiki/Ahom_alphabet"
-  }
-];
+//Exersize Morning
+//Chessboard
+let size = 4, board = "";
 
-console.log("PAPA");
-
-//FILTERING Arrays
-function z_filter(array, test) {
-  let passed = [];
-  for (let element of array) {
-    if (test(element)) {
-      passed.push(element);
+for (y = 1; y <= size; y++) {
+  for (let x = 1; x <= size; x++) {
+    if (((x + y) % 2) == 0) {
+      board += " ";
+    }
+    else {
+      board += "#";
     }
   }
-  return(passed);
+  board += "\n";
 }
 
-//Output custom function and standard function
-//console.log(z_filter(SCRIPTS, script => !script.living));
-console.log(SCRIPTS.filter(s => s.living));
+console.log("Chessboard\n", board);
 
-//TRANSFORMING with map
-function z_map(array, transform) {
-  let mapped = [];
-  for (let element of array) {
-    mapped.push(transform(element));
+//Recursion
+function isEven(n) {
+  if (n == 0) {
+    return true;
   }
-  return(mapped);
-}
-
-//Output custom function and standard function
-let ltrScripts = SCRIPTS.filter(s => s.direction == "ltr");
-console.log(z_map(ltrScripts, s => s.name));
-console.log(ltrScripts.map(s => s.name));
-//FILTER AND MAP using COMPOSABILITY
-console.log(SCRIPTS.filter(s => s.direction == "rtl").map(s => s.name));
-
-//SUMMARIZE with reduce
-function z_reduce(array, combine, start) {
-  let current = start;
-  for (let element of array) {
-    current = combine(current, element);
+  else if (n == 1) {
+    return false;
   }
-  return(current);
+  else if (n < 0) {
+    return(isEven(-n));
+  }
+  else {
+    return(isEven(n - 2));
+  }
 }
 
-//Output custom function and standard function
-console.log(z_reduce([1,2,3,4,5], (a, b) => a + b, 0));
-console.log([1, 2, 3, 4].reduce((a, b) => a + b));
+console.log("Recusion\n", isEven(75))
 
-//COMPOSABILITY
-function average(array) {
-  return array.reduce((a, b) => a + b) / array.length;
+//Reversing an Array
+let array = [1, 2, 3, "a", 4];
+
+function reverseArray(array) {
+  revArray = [];
+  for (a = array.length - 1; a >= 0; a = a +- 1) {
+    revArray.push(array[a]);
+  }
+  return(revArray);
 }
 
-console.log(Math.round(average(SCRIPTS.filter(s => s.living).map(s => s.year))));
-console.log(Math.round(average(SCRIPTS.filter(s => !s.living).map(s => s.year))));
+console.log("Reverse Array\n", reverseArray(array));
+
+//Flattening
+let arrays = [[1, 2, 3], [4, "a"], [5]];
+
+console.log("Flattening\n", arrays.reduce((a, b) => a.concat(b)));
+
+//Your Own Loop
+function loop(title, start, test, update, body) {
+  console.log(title);
+  for(value = start; test(value); value = update(value)) {
+    body(value);
+  }
+}
+
+loop("Your Own Loop", 3, n => n > 0, n => n - 1, console.log);
