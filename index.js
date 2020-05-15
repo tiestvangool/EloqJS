@@ -1,63 +1,53 @@
-//Exersize Morning
-//Chessboard
-let size = 4, board = "";
-
-for (y = 1; y <= size; y++) {
-  for (let x = 1; x <= size; x++) {
-    if (((x + y) % 2) == 0) {
-      board += " ";
+//The Matrix
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+    
+    for(let y = 0; y < height; y++) {
+      for(let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
     }
-    else {
-      board += "#";
+  }
+  
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }
+  set(x, y, value) {
+    this.content[y * this.width + x] = value;
+  }
+}
+
+class MatrixIterator {
+  constructor(matrix) {
+    this.x = 0;
+    this.y = 0;
+    this.matrix = matrix;
+  }
+  
+  next() {
+    if (this.y == this.matrix.height) return {done: true};
+    
+    let value = {x: this.x,
+                 y: this.y,
+                 value: this.matrix.get(this.x, this.y)};
+    this.x++;
+    
+    if (this.x == this.matrix.width) {
+      this.x = 0;
+      this.y++;
     }
-  }
-  board += "\n";
-}
-
-console.log("Chessboard\n", board);
-
-//Recursion
-function isEven(n) {
-  if (n == 0) {
-    return true;
-  }
-  else if (n == 1) {
-    return false;
-  }
-  else if (n < 0) {
-    return(isEven(-n));
-  }
-  else {
-    return(isEven(n - 2));
+    return {value, done: false};
   }
 }
 
-console.log("Recusion\n", isEven(75))
+Matrix.prototype[Symbol.iterator] = function() {
+  return new MatrixIterator(this);
+};
 
-//Reversing an Array
-let array = [1, 2, 3, "a", 4];
-
-function reverseArray(array) {
-  revArray = [];
-  for (a = array.length - 1; a >= 0; a = a +- 1) {
-    revArray.push(array[a]);
-  }
-  return(revArray);
+let matrix = new Matrix(4, 2, (x, y) => `value ${x},${y}`);
+for (let {x, y, value} of matrix) {
+  console.log(x, y, value);
 }
-
-console.log("Reverse Array\n", reverseArray(array));
-
-//Flattening
-let arrays = [[1, 2, 3], [4, "a"], [5]];
-
-console.log("Flattening\n", arrays.reduce((a, b) => a.concat(b)));
-
-//Your Own Loop
-function loop(title, start, test, update, body) {
-  console.log(title);
-  for(value = start; test(value); value = update(value)) {
-    body(value);
-  }
-}
-
-loop("Your Own Loop", 3, n => n > 0, n => n - 1, console.log);
