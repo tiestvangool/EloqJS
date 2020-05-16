@@ -62,3 +62,30 @@ for (let {x, y, value} of matrix) {
 }
 
 //Getters, Setters, and Statics
+//Method calls directly accessible by properties.
+class Temperature {
+  constructor(celsius) {
+    this.celsius = celsius;
+  }
+//A getter "reads" the value from the corresponding property.
+  get fahrenheit() {
+    return this.celsius * 1.8 + 32;
+  }
+//Opposite to getter: the setter, writes a value the property.
+  set fahrenheit(value) {
+    this.celsius = (value - 32) / 1.8;
+  }
+//Stored on constructor, invokes: Temparature.fromFahrenheit(100)
+  static fromFahrenheit(value) {
+    return new Temperature((value - 32) / 1.8);
+  }
+}
+
+let temp = new Temperature(18);
+//Getter
+console.log(temp.fahrenheit);
+temp.fahrenheit = 64.4;
+//Setter
+console.log(temp.celsius);
+//Static
+console.log(Temperature.fromFahrenheit(80));
