@@ -1,4 +1,8 @@
-//The Matrix
+//A prototype contains properties for which all instances of a
+//class share the same value, such as methods.
+//
+//A class defines the shape of a type of object -- what methods
+//and properties it has.
 class Matrix {
   constructor(width, height, element = (x, y) => undefined) {
     this.width = width;
@@ -12,9 +16,12 @@ class Matrix {
     }
   }
   
+  //Get method to retrieve coordinates
   get(x, y) {
     return this.content[y * this.width + x];
   }
+ 
+ //Set method to update coordinates 
   set(x, y, value) {
     this.content[y * this.width + x] = value;
   }
@@ -43,11 +50,15 @@ class MatrixIterator {
   }
 }
 
+//Symbols are - unlike strings - unique and usable as property
+//names for interfaces.
 Matrix.prototype[Symbol.iterator] = function() {
   return new MatrixIterator(this);
 };
 
-let matrix = new Matrix(4, 2, (x, y) => `value ${x},${y}`);
+let matrix = new Matrix(2, 3, (x, y) => `value ${x},${y}`);
 for (let {x, y, value} of matrix) {
   console.log(x, y, value);
 }
+
+//Getters, Setters, and Statics
